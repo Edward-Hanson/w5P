@@ -99,11 +99,10 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub '${ProjectName}-db-credential'
-          
+
 
   ECSStack:
     Type: AWS::CloudFormation::Stack
-    DependsOn: DBStack
     Properties:
       TemplateURL: https://deployment-infras-bucket.s3.eu-west-1.amazonaws.com/ECS.yml
       Parameters:
