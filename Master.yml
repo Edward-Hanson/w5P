@@ -606,6 +606,7 @@ Resources:
 
   CodeDeployStack:
     Type: AWS::CloudFormation::Stack
+    DependsOn: ECSService
     Properties:
       TemplateURL: https://deployment-infras-bucket.s3.eu-west-1.amazonaws.com/BG-Tranform.yml
       Parameters:
