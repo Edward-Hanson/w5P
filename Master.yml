@@ -35,8 +35,8 @@ Resources:
       TemplateURL: https://deployment-infras-bucket.s3.eu-west-1.amazonaws.com/DB.yml
       Parameters:
         ProjectName: !Ref ProjectName
-        DatabaseUsername: !Ref DatabaseUsername
-        DatabasePassword: !Ref DatabasePassword
+        DatabaseUsername: cloudbasedapp
+        DatabasePassword: cloudbasedapp123
 
   ECSStack:
     Type: AWS::CloudFormation::Stack
