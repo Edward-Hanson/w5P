@@ -1,0 +1,64 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Master Stack to deploy CloudBasedProject infrastructure using nested stacks in proper order.
+
+Parameters:
+  ProjectName:
+    Type: String
+    Default: cloudbasedproject
+
+  ImageTag:
+    Type: String
+    Default: latest
+
+  DatabaseUsername:
+    Type: String
+    Default: cloudbasedapp
+
+  DatabasePassword:
+    Type: String
+    NoEcho: true
+    MinLength: 8
+
+Resources:
+
+  VPCStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://deployment-infras-bucket.s3.eu-west-1.amazonaws.com/VPC.yml
+      Parameters:
+        ProjectName: !Ref ProjectName
+
+  ECRStack:
+    Type: AWS::CloudFormation::Stack
+    DependsOn: VPCStack
+    Properties:
+      TemplateURL: https://deployment-infras-bucket.s3.eu-west-1.amazonaws.com/ECR.yml
+      Parameters:
+        ProjectName: !Ref ProjectName
+
+  DBStack:
+    Type: AWS::CloudFormation::Stack
+    DependsOn: ECRStack
+    Properties:
+      TemplateURL: https://deployment-infras-bucket.s3.eu-west-1.amazonaws.com/DB.yml
+      Parameters:
+        ProjectName: !Ref ProjectName
+        DatabaseUsername: !Ref DatabaseUsername
+        DatabasePassword: !Ref DatabasePassword
+
+  ECSStack:
+    Type: AWS::CloudFormation::Stack
+    DependsOn: DBStack
+    Properties:
+      TemplateURL: https://deployment-infras-bucket.s3.eu-west-1.amazonaws.com/ECS.yml
+      Parameters:
+        ProjectName: !Ref ProjectName
+        ImageTag: !Ref ImageTag
+
+  CodeDeployStack:
+    Type: AWS::CloudFormation::Stack
+    DependsOn: ECSStack
+    Properties:
+      TemplateURL: https://deployment-infras-bucket.s3.eu-west-1.amazonaws.com/BG-Tranform.yml
+      Parameters:
+        ProjectName: !Ref ProjectName
