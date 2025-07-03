@@ -309,7 +309,6 @@ Resources:
 
   DatabaseSubnetGroup:
     Type: AWS::RDS::DBSubnetGroup
-    DependsOn: VPCStack
     Properties:
       DBSubnetGroupName: !Sub '${ProjectName}-db-subnet-group'
       DBSubnetGroupDescription: Subnet group for RDS database
@@ -322,7 +321,6 @@ Resources:
 
   DatabaseParameterGroup:
     Type: AWS::RDS::DBParameterGroup
-    DependsOn: VPCStack
     Properties:
       Family: postgres17
       Description: Parameter group for PostgreSQL 17
