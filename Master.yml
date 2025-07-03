@@ -17,7 +17,7 @@ Parameters:
   DatabasePassword:
     Type: String
     NoEcho: true
-    MinLength: 8
+    Default: cloudbasedapp123
 
 Resources:
 
@@ -28,6 +28,7 @@ Resources:
       Parameters:
         ProjectName: !Ref ProjectName
 
+
   DBStack:
     Type: AWS::CloudFormation::Stack
     DependsOn: ECRStack
@@ -35,8 +36,8 @@ Resources:
       TemplateURL: https://deployment-infras-bucket.s3.eu-west-1.amazonaws.com/DB.yml
       Parameters:
         ProjectName: !Ref ProjectName
-        DatabaseUsername: cloudbasedapp
-        DatabasePassword: cloudbasedapp123
+        DatabaseUsername: !Ref DatabaseUsername
+        DatabasePassword: !Ref DatabasePassword
 
   ECSStack:
     Type: AWS::CloudFormation::Stack
