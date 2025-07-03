@@ -602,32 +602,32 @@ Resources:
 
   
 
-# ################################ CodeDeploy Stack ##########################################
+################################ CodeDeploy Stack ##########################################
 
 
-#   CodeDeployStack:
-#     Type: AWS::CloudFormation::Stack
-#     DependsOn: ECSService
-#     Properties:
-#       TemplateURL: https://deployment-infras-bucket.s3.eu-west-1.amazonaws.com/BG-Tranform.yml
-#       Parameters:
-#         ProjectName: !Ref ProjectName
+  CodeDeployStack:
+    Type: AWS::CloudFormation::Stack
+    DependsOn: ECSService
+    Properties:
+      TemplateURL: https://deployment-infras-bucket.s3.eu-west-1.amazonaws.com/BG-Tranform.yml
+      Parameters:
+        ProjectName: !Ref ProjectName
 
-# Outputs:
-#   DatabaseEndpoint:
-#     Description: Database endpoint
-#     Value: !GetAtt DatabaseInstance.Endpoint.Address
-#     Export:
-#       Name: !Sub '${ProjectName}-db-endpoint'
+Outputs:
+  DatabaseEndpoint:
+    Description: Database endpoint
+    Value: !GetAtt DatabaseInstance.Endpoint.Address
+    Export:
+      Name: !Sub '${ProjectName}-db-endpoint'
 
-#   DatabasePort:
-#     Description: Database port
-#     Value: !GetAtt DatabaseInstance.Endpoint.Port
-#     Export:
-#       Name: !Sub '${ProjectName}-db-port'
+  DatabasePort:
+    Description: Database port
+    Value: !GetAtt DatabaseInstance.Endpoint.Port
+    Export:
+      Name: !Sub '${ProjectName}-db-port'
 
-#   DatabaseSecretArn:
-#     Description: Database secret ARN
-#     Value: !Ref DatabaseSecret
-#     Export:
-#       Name: !Sub '${ProjectName}-db-secret-arn'
+  DatabaseSecretArn:
+    Description: Database secret ARN
+    Value: !Ref DatabaseSecret
+    Export:
+      Name: !Sub '${ProjectName}-db-secret-arn'
